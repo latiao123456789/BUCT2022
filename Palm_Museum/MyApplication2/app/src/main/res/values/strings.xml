@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="database_username">root</string>
+    <string name="database_password">root</string>
+    <string name="database_ip">124.126.98.101</string>
+</resources>
