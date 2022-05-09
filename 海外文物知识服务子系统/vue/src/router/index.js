@@ -13,6 +13,11 @@ const routes = [
         name: 'wen_wu',
         component: () => import("@/views/wen_wu"),
       },
+      {
+        path: 'time_line',
+        name: 'time_line',
+        component: () => import("@/views/time_line"),
+      },
     ]
   },
   {
