@@ -1,6 +1,5 @@
-package com.example.myapplication.ui.home;
+package com.example.myapplication.ui.home.search;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.myapplication.DB.DBConnect;
-import com.example.myapplication.R;
-import com.example.myapplication.ui.home.search.search;
-import com.example.myapplication.ui.wenwuList.Wenwu;
-import com.example.myapplication.ui.wenwuList.WenwuAdapter;
-
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.DB.DBConnect;
+import com.example.myapplication.R;
+import com.example.myapplication.ui.wenwuList.Wenwu;
+import com.example.myapplication.ui.wenwuList.WenwuAdapter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -30,74 +29,68 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeAct extends Activity {
+public class search extends AppCompatActivity {
     private List<Wenwu> wenwuList=new ArrayList<>();
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private WenwuAdapter mWenwuAdapter;
-    private Context con;
-    private Button searchButton;
     private EditText et;
+    private Context con;
+    private String word=new String("");
+    private Button btn;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
-        Log.v("test","1");
-        con=this;
-        recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
-        Log.v("test","1");
+        setContentView(R.layout.search_page);
+        init();
+        Intent intent=getIntent();
+        et.setText(intent.getStringExtra("word"));
+        word=et.getText().toString().trim();
         layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        Log.v("test","1");
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        Log.v("test","1");
         initWenWuList();
-        Log.v("test","1");
-        searchButton=(Button)findViewById(R.id.search_btn_back);
-        et=(EditText)findViewById(R.id.search_et_input);
-        searchButton.setOnClickListener(new View.OnClickListener(){
+        btn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(HomeAct.this, search.class);
-                intent.putExtra("word",et.getText().toString().trim());
-                startActivity(intent);
+            public void onClick(View view){
+                initWenWuList();
             }
         });
     }
+    private void init(){
+        et=(EditText)findViewById(R.id.search_input);
+        con=this;
+        recyclerView=(RecyclerView)findViewById(R.id.search_recycle);
+        btn=(Button)findViewById(R.id.search_btn_search_page);
+    }
     public void initWenWuList(){
+        word=et.getText().toString().trim();
+        wenwuList.clear();
         new Thread(new Runnable(){
             @Override
             public void run(){
                 try {
-                    Connection conn = DBConnect.GetConnection();
-                    String sql = "select * from wenwu";
-                    Statement st = (Statement) conn.createStatement();
+                    Connection cn = DBConnect.GetConnection();
+                    String sql = "select * from wenwu where wname like '%"+word+"%'";
+                    Log.v("test",sql);
+                    Statement st = cn.createStatement();
+                    Log.v("test",sql);
                     ResultSet rs=st.executeQuery(sql);
+                    Log.v("test",sql);
                     while(rs.next()){
                         Wenwu wenwu=new Wenwu(rs.getString("wname"),Integer.parseInt(rs.getString("visnum")));
                         wenwuList.add(wenwu);
                     }
                     myhandler.sendEmptyMessage(1);
                     st.close();
-                    conn.close();
+                    cn.close();
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
             }
         }).start();
     };
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent home = new Intent(Intent.ACTION_MAIN);
-            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            home.addCategory(Intent.CATEGORY_HOME);
-            startActivity(home);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     private Handler myhandler = new Handler(){
         public void handleMessage(Message msg){

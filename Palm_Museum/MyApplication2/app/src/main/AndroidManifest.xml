@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication" >
-    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,9 +10,11 @@
         android:theme="@style/Theme.MyApplication" >
         <activity android:name=".test" >
         </activity>
-        <activity android:name=".ui.login.SignupAct" />
+        <activity android:name=".ui.login.SignupAct"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.home.HomeAct" />
-        <activity android:name=".listview.listviewactivity" />
+        <activity android:name=".ui.home.search.search" />
+        <activity android:name=".ui.wenwuMainPage.wenwuMainPage" />
         <activity android:name=".ui.login.LoginAct" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,5 +23,5 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

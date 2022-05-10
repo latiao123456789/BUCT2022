@@ -6,15 +6,23 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.os.Message;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.sql.*;
 
+import com.example.myapplication.DB.DBConnect;
 import com.example.myapplication.R;
-import com.example.myapplication.listview.listviewactivity;
 import com.example.myapplication.ui.home.HomeAct;
+
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class LoginAct extends AppCompatActivity {
@@ -22,27 +30,12 @@ public class LoginAct extends AppCompatActivity {
     private Button myButtonlogin;
     private EditText usernameEditText;
     private EditText passwordEditText;
-    @SuppressLint("HandlerLeak")
-    private Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg){
-            switch(msg.what){
-                case 0x11:
-                    Toast.makeText(getApplicationContext(),"密码错误",Toast.LENGTH_SHORT).show();
-                    break;
-                case 0x12:
-                    Intent intent = new Intent(LoginAct.this,HomeAct.class);
-                    intent.putExtra("username",msg.obj.toString());
-                    startActivity(intent);
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        Log.v("good","build");
         usernameEditText=(EditText)findViewById(R.id.logInUsername);
         passwordEditText=(EditText)findViewById(R.id.logInPassword);
         myButtonsignup=(Button)findViewById(R.id.btn_2);
@@ -57,23 +50,50 @@ public class LoginAct extends AppCompatActivity {
         myButtonlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
                 new Thread(new Runnable(){
                     @Override
                     public void run() {
-                        String password=getPasswordByUserNameAct.
-                                getPasswordByUserName(String.valueOf(R.id.logInUsername));
-                        Message message=handler.obtainMessage();
-                        String passwordInEditText=passwordEditText.getText().toString();
-                        message.obj=usernameEditText.getText().toString();
-                        if(password!=null && password.equals(passwordInEditText)){
-                            message.what=0x12;
-                        }else{
-                            message.what=0x11;
+                        try{
+                            Connection cn= DBConnect.GetConnection();
+                            String sql="select password from user where username = '"+usernameEditText.getText().toString().trim()+"'";
+                            Statement stmt=cn.createStatement();
+                            ResultSet rs=stmt.executeQuery(sql);
+                            rs.next();
+                            String name=rs.getString("password");
+                            Log.v("1aa",name);
+                            if(name.equals(passwordEditText.getText().toString().trim())) {
+                                myhandler.sendEmptyMessage(1);
+                            }
+                            else{
+                                myhandler.sendEmptyMessage(0);
+                            }
+                            stmt.close();
+                            cn.close();
+                        }catch(SQLException e) {
+                            myhandler.sendEmptyMessage(0);
+                            e.printStackTrace();
                         }
-                        handler.sendMessage(message);
                     }
-                });
+                }).start();
             }
         });
+        Toast.makeText(getApplicationContext(),"Click",Toast.LENGTH_SHORT).show();
     }
+    private Handler myhandler = new Handler(){
+        public void handleMessage(Message msg){
+            switch(msg.what){
+                case 1:
+                    Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(LoginAct.this,HomeAct.class);
+                    intent.putExtra("user",usernameEditText.getText().toString().trim());
+                    startActivity(intent);
+                    finish();
+                    break;
+                case 0:
+                    passwordEditText.setError("密码错误或用户名不存在！");
+                    Log.v("log","bad");
+            }
+        }
+    };
 }

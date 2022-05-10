@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
     <ImageView
-        android:id="@+id/iv"
+        android:id="@+id/wenwu_image"
         android:layout_width="161dp"
         android:layout_height="100dp"
         android:src="@drawable/exp"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/wenwu_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="文物名称：文物名称"
@@ -29,19 +29,19 @@
             android:paddingLeft="9dp"
             android:paddingRight="10dp"
             />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_time"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="文物年代：文物年代"-->
+<!--            android:textSize="20sp"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:paddingRight="10dp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:paddingTop="9dp"-->
+<!--            />-->
         <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="文物年代：文物年代"
-            android:textSize="20sp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="@color/black"
-            android:paddingTop="9dp"
-            />
-        <TextView
-            android:id="@+id/tv_num"
+            android:id="@+id/wenwu_visnum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="阅读量：阅读量"

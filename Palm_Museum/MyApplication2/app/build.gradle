@@ -30,8 +30,7 @@ android {
 
 dependencies {
     implementation files('src\\main\\libs\\mysql-connector-java-5.1.30-bin.jar')
-    def recyclerview_version ="1.1.0"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-alpha05"
     implementation 'androidx.appcompat:appcompat:1.2.0'
