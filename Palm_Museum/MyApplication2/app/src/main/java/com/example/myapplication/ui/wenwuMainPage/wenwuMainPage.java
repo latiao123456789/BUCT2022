@@ -25,20 +25,21 @@ import java.sql.Statement;
 
 public class wenwuMainPage extends AppCompatActivity {
     private String intro=new String("");
-    private Button fs;
+    private Button pl;
     private TextView tv;
+    private String wid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_main_page);
         Intent intent = getIntent();
-        String name = intent.getStringExtra("wenwu");
+        wid = intent.getStringExtra("wid");
         new Thread(new Runnable(){
             @Override
             public void run() {
                 try {
                     Connection cn= DBConnect.GetConnection();
-                    String sql="select intro from wenwu where wname ='"+name+"'";
+                    String sql="select intro from wenwu where wid ="+wid;
                     Log.v("test",sql);
                     Statement st=cn.createStatement();
                     ResultSet rs=st.executeQuery(sql);
@@ -52,12 +53,12 @@ public class wenwuMainPage extends AppCompatActivity {
                 }
             }
         }).start();
-        fs=(Button)findViewById(R.id.comment_btn);
-        fs.setOnClickListener(new View.OnClickListener(){
+        pl=(Button)findViewById(R.id.comment_btn);
+        pl.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent=new Intent(wenwuMainPage.this, commentMainPage.class);
-                intent.putExtra("name",name);
+                intent.putExtra("wid",wid);
                 startActivity(intent);
             }
         });

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.sql.*;
 
 import com.example.myapplication.DB.DBConnect;
+import com.example.myapplication.Global;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.home.HomeAct;
 
@@ -30,7 +31,8 @@ public class LoginAct extends AppCompatActivity {
     private Button myButtonlogin;
     private EditText usernameEditText;
     private EditText passwordEditText;
-
+    private String uid=new String("");
+    private String names=new String("");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +58,14 @@ public class LoginAct extends AppCompatActivity {
                     public void run() {
                         try{
                             Connection cn= DBConnect.GetConnection();
-                            String sql="select password from user where username = '"+usernameEditText.getText().toString().trim()+"'";
+                            String sql="select * from user where username = '"+usernameEditText.getText().toString().trim()+"'";
+                            Log.v("test",sql);
                             Statement stmt=cn.createStatement();
                             ResultSet rs=stmt.executeQuery(sql);
                             rs.next();
                             String name=rs.getString("password");
+                            uid=rs.getString("uid");
+                            names=rs.getString("username");
                             Log.v("1aa",name);
                             if(name.equals(passwordEditText.getText().toString().trim())) {
                                 myhandler.sendEmptyMessage(1);
@@ -84,9 +89,9 @@ public class LoginAct extends AppCompatActivity {
         public void handleMessage(Message msg){
             switch(msg.what){
                 case 1:
-                    Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(LoginAct.this,HomeAct.class);
-                    intent.putExtra("user",usernameEditText.getText().toString().trim());
+                    Global.uid=uid;
+                    Global.name=names;
                     startActivity(intent);
                     finish();
                     break;

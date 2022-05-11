@@ -3,6 +3,7 @@ package com.example.myapplication.ui.wenwuList;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.DB.DBConnect;
+import com.example.myapplication.Global;
 import com.example.myapplication.R;
+import com.example.myapplication.ui.wenwuMainPage.comment.comment;
 import com.example.myapplication.ui.wenwuMainPage.wenwuMainPage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class WenwuAdapter extends RecyclerView.Adapter<WenwuAdapter.ViewHolder>{
@@ -58,8 +67,27 @@ public class WenwuAdapter extends RecyclerView.Adapter<WenwuAdapter.ViewHolder>{
             @Override
             public void onClick(View v){
                 Intent intent=new Intent(mContext, wenwuMainPage.class);
-                intent.putExtra("wenwu",wenwu.getName());
+                intent.putExtra("wid",wenwu.getWid());
                 mContext.startActivity(intent);
+                new Thread(new Runnable(){
+                    @Override
+                    public void run() {
+                        while(Global.genWuInit()==1)continue;
+                        int u=0;
+                        try{
+                            Connection cn=DBConnect.GetConnection();
+                            String sql="update wenwu set visnum=visnum+1 where wid="+wenwu.getWid();
+                            Log.v("test",sql);
+                            PreparedStatement pst;
+                            pst=(PreparedStatement)cn.prepareStatement(sql);
+                            u=pst.executeUpdate();
+                            pst.close();
+                            cn.close();
+                        }catch (SQLException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
     }

@@ -29,13 +29,13 @@
                 android:layout_height="wrap_content"
                 android:text="名字名字名字"
                 android:textSize="25sp"/>
-            <TextViet
+            <TextView
+                android:id="@+id/comment_time"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="时间时间时间"
-                android:textSize="15sp"
-                android:layout_marginBottom="15dp"/>
+                android:textSize="15sp"/>
         </LinearLayout>
     </LinearLayout>
     <TextView

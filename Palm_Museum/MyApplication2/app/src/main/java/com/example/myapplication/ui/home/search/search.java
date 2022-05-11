@@ -79,7 +79,7 @@ public class search extends AppCompatActivity {
                     ResultSet rs=st.executeQuery(sql);
                     Log.v("test",sql);
                     while(rs.next()){
-                        Wenwu wenwu=new Wenwu(rs.getString("wname"),Integer.parseInt(rs.getString("visnum")));
+                        Wenwu wenwu=new Wenwu(rs.getString("wname"),rs.getString("visnum"),rs.getString("wid"));
                         wenwuList.add(wenwu);
                     }
                     myhandler.sendEmptyMessage(1);

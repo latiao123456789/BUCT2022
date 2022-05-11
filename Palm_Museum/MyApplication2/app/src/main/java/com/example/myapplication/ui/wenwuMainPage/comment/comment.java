@@ -1,24 +1,24 @@
 package com.example.myapplication.ui.wenwuMainPage.comment;
 
+import com.example.myapplication.Global;
+
 public class comment {
-    private int uid;
-    private int wid;
+    private String uid;
+    private String wid;
     private String name;
     private String comment;
     private String time;
-    private Boolean liked;
-    public comment(int uid,int wid,String name,String comment,String time,Boolean liked){
+    public comment(String name,String wid,String comment,String time,String uid){
         this.wid=wid;
-        this.uid=uid;
         this.name=name;
         this.comment=comment;
         this.time=time;
-        this.liked=liked;
+        this.uid=uid;
     }
-    public int getUid(){
+    public String getUid(){
         return uid;
     }
-    public int getWid(){
+    public String getWid(){
         return wid;
     }
     public String getName(){
@@ -29,8 +29,5 @@ public class comment {
     }
     public String getTime(){
         return time;
-    }
-    public Boolean getLiked(){
-        return liked;
     }
 }

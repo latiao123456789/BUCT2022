@@ -34,6 +34,7 @@
             android:text="点赞"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comment_area"
         android:layout_height="400dp"
          android:layout_width="match_parent"/>
     <LinearLayout

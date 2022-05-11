@@ -21,19 +21,18 @@ import java.util.List;
 
 public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHolder>{
     private List<comment> mCommentList;
-    private Context mContext;
-    class ViewHolder extends RecyclerView.ViewHolder{
-        View commentView;
+    static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView commentName;
         private TextView commentText;
-        public ViewHolder(@NonNull View view){
+        private TextView commentTime;
+        public ViewHolder(View view){
             super(view);
             commentName=(TextView)view.findViewById(R.id.comment_name);
             commentText=(TextView)view.findViewById(R.id.comment_text);
+            commentTime=(TextView)view.findViewById(R.id.comment_time);
         }
     }
-    public commentAdapter(Context mContext,List<comment> commentList){
-        this.mContext=mContext;
+    public commentAdapter(List<comment> commentList){
         mCommentList=commentList;
     }
     public void removeData(int position){
@@ -41,26 +40,18 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         notifyDataSetChanged();
     }
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comment_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
-    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull commentAdapter.ViewHolder holder, int position){
+    public void onBindViewHolder(ViewHolder holder, int position){
         comment comt=mCommentList.get(position);
         holder.commentName.setText(comt.getName());
         holder.commentText.setText(comt.getComment());
-        holder.commentView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent=new Intent(mContext, wenwuMainPage.class);
-                intent.putExtra("wenwu",comt.getName());
-                mContext.startActivity(intent);
-            }
-        });
+        holder.commentTime.setText(comt.getTime());
     }
     @Override
     public int getItemCount(){

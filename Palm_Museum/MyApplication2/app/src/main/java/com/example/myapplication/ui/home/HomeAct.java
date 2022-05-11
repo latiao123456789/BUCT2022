@@ -11,8 +11,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.myapplication.DB.DBConnect;
+import com.example.myapplication.Global;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.home.search.search;
 import com.example.myapplication.ui.wenwuList.Wenwu;
@@ -38,29 +40,31 @@ public class HomeAct extends Activity {
     private Context con;
     private Button searchButton;
     private EditText et;
+    private TextView tv;
+    private String uid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        Log.v("test","1");
         con=this;
+        tv=(TextView)findViewById(R.id.uid);
         recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
-        Log.v("test","1");
         layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        Log.v("test","1");
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        Log.v("test","1");
         initWenWuList();
-        Log.v("test","1");
         searchButton=(Button)findViewById(R.id.search_btn_back);
         et=(EditText)findViewById(R.id.search_et_input);
+        Intent intent=getIntent();
+        uid=intent.getStringExtra("uid");
+        tv.setText(Global.getname());
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(HomeAct.this, search.class);
                 intent.putExtra("word",et.getText().toString().trim());
+                intent.putExtra("uid",uid);
                 startActivity(intent);
             }
         });
@@ -69,13 +73,16 @@ public class HomeAct extends Activity {
         new Thread(new Runnable(){
             @Override
             public void run(){
+                Global.wenWuInit=1;
+                wenwuList.clear();
                 try {
                     Connection conn = DBConnect.GetConnection();
                     String sql = "select * from wenwu";
                     Statement st = (Statement) conn.createStatement();
                     ResultSet rs=st.executeQuery(sql);
                     while(rs.next()){
-                        Wenwu wenwu=new Wenwu(rs.getString("wname"),Integer.parseInt(rs.getString("visnum")));
+                        Log.v("test",rs.getString("wid"));
+                        Wenwu wenwu=new Wenwu(rs.getString("wname"),rs.getString("visnum"),rs.getString("wid"));
                         wenwuList.add(wenwu);
                     }
                     myhandler.sendEmptyMessage(1);
@@ -84,6 +91,7 @@ public class HomeAct extends Activity {
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
+                Global.wenWuInit=0;
             }
         }).start();
     };
@@ -99,14 +107,18 @@ public class HomeAct extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initWenWuList();
+    }
+
     private Handler myhandler = new Handler(){
         public void handleMessage(Message msg){
             switch(msg.what){
                 case 1:
                     mWenwuAdapter=new WenwuAdapter(con,wenwuList);
-                    Log.v("test","1");
                     recyclerView.setAdapter(mWenwuAdapter);
-                    Log.v("test","1");
                     break;
                 case 0:
                     break;
