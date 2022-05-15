@@ -1,58 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         android:maxWidth="300dp"
         android:src="@drawable/exp"
         android:layout_gravity="center"
-        android:layout_weight="4"/>
+        android:layout_weight="5"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="#E6E8FA"
+        android:padding="7dp"
         android:orientation="horizontal">
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/button_selector"
             android:layout_weight="1"
+            android:textSize="25sp"
             android:text="简介"/>
         <Button
             android:id="@+id/comment_btn"
+            android:background="@drawable/button_selector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="25sp"
             android:text="评论"/>
         <Button
             android:layout_width="0dp"
+            android:background="@drawable/button_selector"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="25sp"
             android:text="点赞"/>
     </LinearLayout>
+
     <TextView
         android:id="@+id/introduce"
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:background="#E6E8FA"
         android:text="简介简介"
         android:textColor="@color/black"
-        android:textSize="20sp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="发送"/>
-    </LinearLayout>
+        android:textSize="20sp"
+        android:gravity="center"/>
 </LinearLayout>

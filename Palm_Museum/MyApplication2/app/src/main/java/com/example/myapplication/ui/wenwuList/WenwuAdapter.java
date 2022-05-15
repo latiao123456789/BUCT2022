@@ -76,7 +76,7 @@ public class WenwuAdapter extends RecyclerView.Adapter<WenwuAdapter.ViewHolder>{
                         int u=0;
                         try{
                             Connection cn=DBConnect.GetConnection();
-                            String sql="update wenwu set visnum=visnum+1 where wid="+wenwu.getWid();
+                            String sql="update wenwu set visnum=visnum+1 where id="+wenwu.getWid();
                             Log.v("test",sql);
                             PreparedStatement pst;
                             pst=(PreparedStatement)cn.prepareStatement(sql);

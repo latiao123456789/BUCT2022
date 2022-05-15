@@ -63,7 +63,7 @@ public class commentMainPage extends AppCompatActivity {
                         int u=0;
                         try{
                             Connection cn=DBConnect.GetConnection();
-                            String sql="insert into comment(uid,wid,content) values("+Global.getuid()+","+wid+",'"+s+"')";
+                            String sql="insert into comments(username,wid,content) values("+Global.getName()+","+wid+",'"+s+"')";
                             PreparedStatement pst;
                             pst=(PreparedStatement)cn.prepareStatement(sql);
                             u=pst.executeUpdate();
@@ -85,11 +85,11 @@ public class commentMainPage extends AppCompatActivity {
                 try {
                     commentList.clear();
                     Connection cn = DBConnect.GetConnection();
-                    String sql = "select * from comment,user where wid="+wid+" and comment.uid=user.uid";
+                    String sql = "select * from comments,users where wid="+wid+" and comments.username=users.username";
                     Statement st = (Statement)cn.createStatement();
                     ResultSet rs=st.executeQuery(sql);
                     while(rs.next()){
-                        comment comt=new comment(rs.getString("username"),rs.getString("wid"),rs.getString("content"),rs.getString("time"),rs.getString("uid"));
+                        comment comt=new comment(rs.getString("username"),rs.getString("wid"),rs.getString("content"),rs.getString("time"));
                         commentList.add(comt);
                     }
                     myhandler.sendEmptyMessage(1);

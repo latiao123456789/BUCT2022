@@ -39,12 +39,12 @@ public class wenwuMainPage extends AppCompatActivity {
             public void run() {
                 try {
                     Connection cn= DBConnect.GetConnection();
-                    String sql="select intro from wenwu where wid ="+wid;
+                    String sql="select description from wenwu where id ="+wid;
                     Log.v("test",sql);
                     Statement st=cn.createStatement();
                     ResultSet rs=st.executeQuery(sql);
                     rs.next();
-                    intro=rs.getString("intro");
+                    intro=rs.getString("description");
                     myhandler.sendEmptyMessage(1);
                     st.close();
                     cn.close();

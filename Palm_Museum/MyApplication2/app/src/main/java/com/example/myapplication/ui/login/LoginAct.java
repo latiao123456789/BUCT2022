@@ -58,13 +58,12 @@ public class LoginAct extends AppCompatActivity {
                     public void run() {
                         try{
                             Connection cn= DBConnect.GetConnection();
-                            String sql="select * from user where username = '"+usernameEditText.getText().toString().trim()+"'";
+                            String sql="select * from users where username = '"+usernameEditText.getText().toString().trim()+"'";
                             Log.v("test",sql);
                             Statement stmt=cn.createStatement();
                             ResultSet rs=stmt.executeQuery(sql);
                             rs.next();
-                            String name=rs.getString("password");
-                            uid=rs.getString("uid");
+                            String name=rs.getString("pwd");
                             names=rs.getString("username");
                             Log.v("1aa",name);
                             if(name.equals(passwordEditText.getText().toString().trim())) {
@@ -90,7 +89,6 @@ public class LoginAct extends AppCompatActivity {
             switch(msg.what){
                 case 1:
                     Intent intent=new Intent(LoginAct.this,HomeAct.class);
-                    Global.uid=uid;
                     Global.name=names;
                     startActivity(intent);
                     finish();

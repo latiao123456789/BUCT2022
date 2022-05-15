@@ -72,8 +72,8 @@ public class SignupAct extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "密码不能为空!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(passwordString.length()<8){
-                    Toast.makeText(getApplicationContext(), "密码不能少于8位!", Toast.LENGTH_SHORT).show();
+                if(passwordString.length()<6){
+                    Toast.makeText(getApplicationContext(), "密码不能少于6位!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(passwordString.length()>16){
@@ -89,7 +89,7 @@ public class SignupAct extends AppCompatActivity {
                     public void run(){
                         try {
                             Connection cn = DBConnect.GetConnection();
-                            String sql = "select username from user where username = '" + userNameString + "'";
+                            String sql = "select username from users where username = '" + userNameString + "'";
                             Statement stmt = null;
                             stmt = cn.createStatement();
                             ResultSet rs=stmt.executeQuery(sql);
@@ -114,7 +114,8 @@ public class SignupAct extends AppCompatActivity {
                         int u=0;
                         try{
                             Connection cn=DBConnect.GetConnection();
-                            String sql="insert into user(username,password) values('"+userNameString+"','"+passwordString+"')";
+                            String sql="insert into users(username,pwd) values('"+userNameString+"','"+passwordString+"')";
+                            Log.v("test",sql);
                             PreparedStatement pst;
                             pst=(PreparedStatement)cn.prepareStatement(sql);
                             u=pst.executeUpdate();

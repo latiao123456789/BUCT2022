@@ -40,14 +40,14 @@ public class HomeAct extends Activity {
     private Context con;
     private Button searchButton;
     private EditText et;
-    private TextView tv;
+    //private TextView tv;
     private String uid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         con=this;
-        tv=(TextView)findViewById(R.id.uid);
+        //tv=(TextView)findViewById(R.id.uid);
         recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
         layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -58,7 +58,7 @@ public class HomeAct extends Activity {
         et=(EditText)findViewById(R.id.search_et_input);
         Intent intent=getIntent();
         uid=intent.getStringExtra("uid");
-        tv.setText(Global.getname());
+        //tv.setText(Global.getname());
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -81,8 +81,8 @@ public class HomeAct extends Activity {
                     Statement st = (Statement) conn.createStatement();
                     ResultSet rs=st.executeQuery(sql);
                     while(rs.next()){
-                        Log.v("test",rs.getString("wid"));
-                        Wenwu wenwu=new Wenwu(rs.getString("wname"),rs.getString("visnum"),rs.getString("wid"));
+                        Log.v("test",rs.getString("id"));
+                        Wenwu wenwu=new Wenwu(rs.getString("wname"),rs.getString("visnum"),rs.getString("id"));
                         wenwuList.add(wenwu);
                     }
                     myhandler.sendEmptyMessage(1);
