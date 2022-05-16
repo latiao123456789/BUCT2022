@@ -22,6 +22,7 @@ import com.example.myapplication.ui.login.SignupAct;
 import com.example.myapplication.ui.wenwuMainPage.comment.commentMainPage;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,6 +33,7 @@ public class wenwuMainPage extends AppCompatActivity {
     private TextView tv;
     private String wid;
     private ImageView iv;
+    private Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,17 +71,85 @@ public class wenwuMainPage extends AppCompatActivity {
                 finish();
             }
         });
+        btn=(Button)findViewById(R.id.dianZan);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable(){
+                    public void run(){
+                        int flag=0;
+                        int u=0;
+                        try {
+                            Connection cn= DBConnect.GetConnection();
+                            String sql="select * from wenwulikes where username='"+Global.getName()+"' and wid = "+Global.getWenWuid();
+                            Log.v("test",sql);
+                            Statement st=cn.createStatement();
+                            ResultSet rs=st.executeQuery(sql);
+                            if(rs.next())flag=1;
+                            st.close();
+                            if(flag==1){
+                                sql = "delete from wenwulikes where username='" + Global.getName() + "' and wid=" + Global.getWenWuid() ;
+                                Log.v("test", sql);
+                                PreparedStatement pst;
+                                pst = (PreparedStatement) cn.prepareStatement(sql);
+                                u = pst.executeUpdate();
+                                pst.close();
+                                cn.close();
+                                myhandler.sendEmptyMessage(2);
+                            }
+                            else{
+                                sql = "insert into wenwulikes(username,wid) values('" + Global.getName() + "'," + Global.getWenWuid() + ")";
+                                Log.v("test", sql);
+                                PreparedStatement pst;
+                                pst = (PreparedStatement) cn.prepareStatement(sql);
+                                u = pst.executeUpdate();
+                                pst.close();
+                                cn.close();
+                                myhandler.sendEmptyMessage(0);
+                            }
+                            cn.close();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    }
+                }).start();
+
+            }
+        });
+        initDianZan();
+    }
+    public void initDianZan(){
+        new Thread(new Runnable(){
+            @Override
+            public void run(){
+                try {
+                    Connection cn= DBConnect.GetConnection();
+                    String sql="select * from wenwulikes where username='"+Global.getName()+"' and wid = "+Global.getWenWuid();
+                    Log.v("test",sql);
+                    Statement st=cn.createStatement();
+                    ResultSet rs=st.executeQuery(sql);
+                    if(rs.next())myhandler.sendEmptyMessage(0);
+                    st.close();
+                    cn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }).start();
     }
     private Handler myhandler = new Handler(){
         public void handleMessage(Message msg){
             switch(msg.what){
+                case 2:
+                    btn.setBackgroundResource(R.drawable.dianzan);
+                    break;
                 case 1:
                     Log.v("test",intro);
                     tv=(TextView)findViewById(R.id.introduce);
                     tv.setText(intro);
                     break;
                 case 0:
-
+                    btn.setBackgroundResource(R.drawable.liked);
                     break;
             }
         }

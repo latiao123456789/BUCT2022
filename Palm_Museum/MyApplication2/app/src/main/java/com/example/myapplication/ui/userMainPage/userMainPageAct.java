@@ -12,6 +12,7 @@ public class userMainPageAct extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_home);
+
     }
 
 }

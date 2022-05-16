@@ -71,6 +71,7 @@ public class WenwuAdapter extends RecyclerView.Adapter<WenwuAdapter.ViewHolder>{
                 Intent intent=new Intent(mContext, wenwuMainPage.class);
                 intent.putExtra("wid",wenwu.getWid());
                 Global.wenWuUrl=wenwu.getUrl();
+                Global.wenWuid=wenwu.getWid();
                 mContext.startActivity(intent);
                 new Thread(new Runnable(){
                     @Override

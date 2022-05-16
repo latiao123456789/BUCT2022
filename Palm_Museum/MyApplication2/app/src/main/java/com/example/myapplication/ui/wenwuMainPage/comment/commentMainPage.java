@@ -43,43 +43,13 @@ public class commentMainPage extends AppCompatActivity {
     private int flag=1;
     private Button jjbtn;
     private ImageView iv;
-    private Button dianZan;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_page);
         flag=1;
         con=this;
-        dianZan=(Button)findViewById(R.id.dianZan);
         et=(EditText)findViewById(R.id.comment_edittext);
-        dianZan.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                String s=et.getText().toString().trim();
-                if(s.equals("")) {
-                    myhandler.sendEmptyMessage(3);
-                    return;
-                }
-                et.setText("");
-                new Thread(new Runnable(){
-                    @Override
-                    public void run(){
-                        try{
-                            Connection cn=DBConnect.GetConnection();
-                            String sql="insert into comments(username,wid,content) values("+Global.getName()+","+wid+",'"+s+"')";
-                            PreparedStatement pst;
-                            pst=(PreparedStatement)cn.prepareStatement(sql);
-                            pst.close();
-                            cn.close();
-                            myhandler.sendEmptyMessage(0);
-                        }catch (SQLException e){
-                            myhandler.sendEmptyMessage(2);
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
-        });
 
         bt=(Button)findViewById(R.id.push_comment);
         iv=(ImageView)findViewById(R.id.wenWu_image_comment);

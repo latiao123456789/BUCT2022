@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_item1"
+        android:icon="@drawable/wenwu"
+        android:title="文物" />
+    <item
+        android:id="@+id/navigation_item3"
+        android:icon="@drawable/user"
+        android:title="用户" />
+</menu>
