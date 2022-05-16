@@ -7,12 +7,15 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.DB.DBConnect;
+import com.example.myapplication.Global;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.login.LoginAct;
 import com.example.myapplication.ui.login.SignupAct;
@@ -28,10 +31,13 @@ public class wenwuMainPage extends AppCompatActivity {
     private Button pl;
     private TextView tv;
     private String wid;
+    private ImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_main_page);
+        iv=(ImageView)findViewById(R.id.wenWu_image_mainPage);
+        Glide.with(this).load(Global.getWenWuUrl()).into(iv);
         Intent intent = getIntent();
         wid = intent.getStringExtra("wid");
         new Thread(new Runnable(){
@@ -60,6 +66,7 @@ public class wenwuMainPage extends AppCompatActivity {
                 Intent intent=new Intent(wenwuMainPage.this, commentMainPage.class);
                 intent.putExtra("wid",wid);
                 startActivity(intent);
+                finish();
             }
         });
     }

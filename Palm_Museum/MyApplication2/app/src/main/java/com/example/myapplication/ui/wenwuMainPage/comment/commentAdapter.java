@@ -25,11 +25,17 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         private TextView commentName;
         private TextView commentText;
         private TextView commentTime;
+        private ImageView imageView1;
+        private ImageView imageView2;
+        private ImageView imageView3;
         public ViewHolder(View view){
             super(view);
             commentName=(TextView)view.findViewById(R.id.comment_name);
             commentText=(TextView)view.findViewById(R.id.comment_text);
             commentTime=(TextView)view.findViewById(R.id.comment_time);
+//            imageView1=(ImageView)view.findViewById(R.id.image_dianzan);
+//            imageView2=(ImageView)view.findViewById(R.id.image_dislike);
+//            imageView3=(ImageView)view.findViewById(R.id.image_comment);
         }
     }
     public commentAdapter(List<comment> commentList){
@@ -52,6 +58,9 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         holder.commentName.setText(comt.getName());
         holder.commentText.setText(comt.getComment());
         holder.commentTime.setText(comt.getTime());
+//        holder.imageView1.setImageResource(R.drawable.dianzan);
+//        holder.imageView1.setImageResource(R.drawable.dislike);
+//        holder.imageView3.setImageResource(R.drawable.comment);
     }
     @Override
     public int getItemCount(){

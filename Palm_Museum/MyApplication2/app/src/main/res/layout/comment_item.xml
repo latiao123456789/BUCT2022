@@ -2,90 +2,127 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#ffffff"
     android:orientation="vertical">
+
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:background="@color/grey">
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/logo"
+            android:id="@+id/user_photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:scaleType="fitXY"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:layout_marginLeft="10dp"/>
+            android:src="@drawable/logo" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/comment_name"
-                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="名字名字名字"
-                android:textSize="25sp"/>
+                android:textColor="#2f0000"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/comment_time"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="时间时间时间"
-                android:textSize="15sp"/>
+                android:textColor="#5b5b5b"
+                android:textSize="15sp" />
         </LinearLayout>
+
     </LinearLayout>
+
     <TextView
         android:id="@+id/comment_text"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:textSize="25sp"
+        android:background="#ffffff"
         android:text="评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
     <View
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/grey"/>
+        android:layout_marginTop="10dp"
+        android:background="#ffffff" />
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
-        <ImageView
-            android:layout_marginLeft="45dp"
+        android:layout_marginBottom="10dp">
+        <Button
             android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:src="@drawable/dianzan"
-            android:layout_marginRight="45dp"
-            android:scaleType="fitXY"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"/>
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:visibility="invisible"
+            />
         <ImageView
-            android:layout_marginLeft="45dp"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:src="@drawable/dislike"
-            android:layout_marginRight="45dp"
+            android:id="@+id/image_dianzan"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:scaleType="fitXY"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"/>
+            android:src="@drawable/dianzan" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            />
+
         <ImageView
-            android:layout_marginLeft="45dp"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:src="@drawable/comment"
-            android:layout_marginRight="45dp"
+            android:id="@+id/image_dislike"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:scaleType="fitXY"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"/>
+            android:src="@drawable/dislike" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/image_comment"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/comment" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            />
+
     </LinearLayout>
+    <Button
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/black" />
 </LinearLayout>

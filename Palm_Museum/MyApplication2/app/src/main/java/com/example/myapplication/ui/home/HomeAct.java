@@ -82,7 +82,7 @@ public class HomeAct extends Activity {
                     ResultSet rs=st.executeQuery(sql);
                     while(rs.next()){
                         Log.v("test",rs.getString("id"));
-                        Wenwu wenwu=new Wenwu(rs.getString("wname"),rs.getString("visnum"),rs.getString("id"));
+                        Wenwu wenwu=new Wenwu(rs.getString("wname"),rs.getString("visnum"),rs.getString("id"),rs.getString("website"));
                         wenwuList.add(wenwu);
                     }
                     myhandler.sendEmptyMessage(1);

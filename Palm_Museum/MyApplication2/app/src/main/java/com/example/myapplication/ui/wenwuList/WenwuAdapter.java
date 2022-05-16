@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.DB.DBConnect;
 import com.example.myapplication.Global;
 import com.example.myapplication.R;
@@ -63,11 +64,13 @@ public class WenwuAdapter extends RecyclerView.Adapter<WenwuAdapter.ViewHolder>{
         Wenwu wenwu=mWenwuList.get(position);
         holder.wenwuName.setText(wenwu.getName());
         holder.wenwuVisNum.setText("浏览量" + String.valueOf(wenwu.getVisNum()));
+        Glide.with(mContext).load(wenwu.getUrl()).into(holder.wenwuImage);
         holder.wenwuView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent intent=new Intent(mContext, wenwuMainPage.class);
                 intent.putExtra("wid",wenwu.getWid());
+                Global.wenWuUrl=wenwu.getUrl();
                 mContext.startActivity(intent);
                 new Thread(new Runnable(){
                     @Override

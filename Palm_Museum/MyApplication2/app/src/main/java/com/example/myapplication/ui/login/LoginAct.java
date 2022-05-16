@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.os.Message;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import java.sql.*;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.DB.DBConnect;
 import com.example.myapplication.Global;
 import com.example.myapplication.R;
@@ -33,14 +35,19 @@ public class LoginAct extends AppCompatActivity {
     private EditText passwordEditText;
     private String uid=new String("");
     private String names=new String("");
+    private ImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         Log.v("good","build");
         usernameEditText=(EditText)findViewById(R.id.logInUsername);
+        usernameEditText.setText("1");
         passwordEditText=(EditText)findViewById(R.id.logInPassword);
+        passwordEditText.setText("147258369");
         myButtonsignup=(Button)findViewById(R.id.btn_2);
+        iv=(ImageView)findViewById(R.id.iv_1);
+        Glide.with(this).load("https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png").into(iv);
         myButtonsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

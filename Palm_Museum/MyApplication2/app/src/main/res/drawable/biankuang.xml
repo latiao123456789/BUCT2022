@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--radius四个圆角统一设置，也可以单独对某一个圆角设置。例：topLeftRadius-->
+    <corners android:radius="2dp"/>
+    <!--边框宽度width、颜色color-->
+    <stroke android:width="4px" android:color="#000000" />
+    <solid android:color="#E6E8FA" />
+    <padding
+        android:left="4dp"
+        android:top="4dp"
+        android:right="4dp"
+        android:bottom="4dp"/>
+</shape>
