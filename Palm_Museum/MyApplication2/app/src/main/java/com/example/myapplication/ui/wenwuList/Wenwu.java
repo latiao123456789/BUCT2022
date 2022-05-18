@@ -6,7 +6,8 @@ public class Wenwu {
     private String wid;
     private String myurl;
     public Wenwu(String name,String visNum,String wid,String myurl){
-        this.name=name;
+        if(name==null)this.name=new String("未爬取到");
+        else this.name=name;
         this.visNum=visNum;
         this.wid=wid;
         this.myurl=myurl;
@@ -15,6 +16,7 @@ public class Wenwu {
         return name;
     }
     public String getVisNum() { return visNum; }
+    public void setVisNum(String s) { this.visNum=s; }
     public String getWid() { return wid; }
     public String getUrl(){return myurl;}
 }

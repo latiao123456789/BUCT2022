@@ -47,12 +47,32 @@ public class wenwuMainPage extends AppCompatActivity {
             public void run() {
                 try {
                     Connection cn= DBConnect.GetConnection();
-                    String sql="select description from wenwu where id ="+wid;
+                    String sql="select wname,date,description from wenwu where id ="+wid;
                     Log.v("test",sql);
                     Statement st=cn.createStatement();
                     ResultSet rs=st.executeQuery(sql);
                     rs.next();
-                    intro=rs.getString("description");
+                    String temp=new String("");
+
+                    if(rs.getString("wname")!=null){
+                        intro=rs.getString("wname");
+                        temp=temp+intro;
+                        temp=temp+',';
+                    }
+                    if(rs.getString("date")!=null){
+                        intro=rs.getString("date");
+                        temp=temp+intro;
+                        temp=temp+'。';
+                    }
+                    if(rs.getString("description")!=null){
+                        intro=rs.getString("description");
+                        temp=temp+intro;
+                        temp=temp+',';
+                    }
+                    if(temp.equals("")){
+                        temp="未爬取到任何信息。";
+                    }
+                    intro=temp;
                     myhandler.sendEmptyMessage(1);
                     st.close();
                     cn.close();

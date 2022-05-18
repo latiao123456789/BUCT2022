@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#e6e8fa">
 
@@ -14,23 +14,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
         android:orientation="vertical"
+        android:layout_weight="0.5"
         android:paddingLeft="5dp"
         android:paddingRight="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="个人中心"
-                android:textSize="30dp"/>
+                android:text="个人信息修改"
+                android:textSize="25dp"/>
 
         </LinearLayout>
 
@@ -38,46 +38,89 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="账        号："
-                android:textSize="20dp"/>
+                android:text="账        号："/>
 
-            <TextView
-                android:id="@+id/userHome_zhangHao"
+            <EditText
+                android:id="@+id/change_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="phone"
                 android:maxLength="11"
-                android:hint="123"
-                android:textSize="20dp"/>
+                android:hint="输入8~12位"/>
+
+
+
+        </LinearLayout>
+
+        <!--密码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="原   密   码："/>
+
+            <EditText
+                android:id="@+id/change_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="请输入原密码"/>
+        </LinearLayout>
+
+        <!--确认密码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="新密码："/>
+
+            <EditText
+                android:id="@+id/change_newpwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入新密码"
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <!--性别-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="性        别："
-                android:textSize="20dp"/>
+                android:text="性        别："/>
 
             <TextView
-                android:id="@+id/userHome_sex"
+                android:id="@+id/change_sex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="11"
-                android:hint="性别"
-                android:textSize="20dp"/>
+                android:hint="请输入性别"
+                android:drawableRight="@drawable/toright"
+                android:paddingRight="20dp"/>
 
         </LinearLayout>
 
@@ -85,68 +128,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="年        龄："
-                android:textSize="20dp"/>
+                android:text="年        龄："/>
 
-            <TextView
-                android:id="@+id/userHome_age"
+            <EditText
+                android:id="@+id/change_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:maxLength="11"
-                android:hint="年龄"
-                android:textSize="20dp"/>
-
-        </LinearLayout>
-
-        <!--住址-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="住        址："
-                android:textSize="20dp"/>
-
-            <TextView
-                android:id="@+id/userHome_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLength="11"
-                android:hint="住址"
-                android:textSize="20dp"/>
+                android:hint="请输入年龄"/>
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/change_ifo"
+            android:id="@+id/change_baocun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="0.5"
             android:textSize="20sp"
             android:background="@drawable/button_selector"
-            android:text="修改个人信息"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="center">
-
-        </LinearLayout>
+            android:text="保存"/>
 
     </LinearLayout>
 

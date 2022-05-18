@@ -3,6 +3,8 @@ package com.example.myapplication.ui.wenwuList;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,7 @@ import java.util.List;
 public class WenwuAdapter extends RecyclerView.Adapter<WenwuAdapter.ViewHolder>{
     private List<Wenwu> mWenwuList;
     private Context mContext;
+    private String myVisNum=new String("0");
     class ViewHolder extends RecyclerView.ViewHolder{
         View wenwuView;
         private ImageView wenwuImage;
@@ -68,6 +71,9 @@ public class WenwuAdapter extends RecyclerView.Adapter<WenwuAdapter.ViewHolder>{
         holder.wenwuView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                myVisNum=String.valueOf(Integer.parseInt(wenwu.getVisNum())+1);
+                wenwu.setVisNum(myVisNum);
+                holder.wenwuVisNum.setText("浏览量" + myVisNum);
                 Intent intent=new Intent(mContext, wenwuMainPage.class);
                 intent.putExtra("wid",wenwu.getWid());
                 Global.wenWuUrl=wenwu.getUrl();

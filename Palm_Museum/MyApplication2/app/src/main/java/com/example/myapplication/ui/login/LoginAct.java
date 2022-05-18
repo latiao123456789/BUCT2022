@@ -47,7 +47,7 @@ public class LoginAct extends AppCompatActivity {
         passwordEditText.setText("147258369");
         myButtonsignup=(Button)findViewById(R.id.btn_2);
         iv=(ImageView)findViewById(R.id.iv_1);
-        Glide.with(this).load("https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png").into(iv);
+        //Glide.with(this).load("https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png").into(iv);
         myButtonsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

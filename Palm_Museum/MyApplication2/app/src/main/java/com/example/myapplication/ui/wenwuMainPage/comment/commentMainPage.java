@@ -85,7 +85,7 @@ public class commentMainPage extends AppCompatActivity {
                         int u=0;
                         try{
                             Connection cn=DBConnect.GetConnection();
-                            String sql="insert into comments(username,wid,content) values("+Global.getName()+","+wid+",'"+s+"')";
+                            String sql="insert into comments(username,wid,content) values('"+Global.getName()+"',"+wid+",'"+s+"')";
                             PreparedStatement pst;
                             pst=(PreparedStatement)cn.prepareStatement(sql);
                             u=pst.executeUpdate();

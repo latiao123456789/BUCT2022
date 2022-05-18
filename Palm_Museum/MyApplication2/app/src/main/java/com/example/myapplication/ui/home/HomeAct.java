@@ -16,7 +16,10 @@ import android.widget.TextView;
 import com.example.myapplication.DB.DBConnect;
 import com.example.myapplication.Global;
 import com.example.myapplication.R;
+import com.example.myapplication.ui.daohang.daoHangFra;
 import com.example.myapplication.ui.home.search.search;
+import com.example.myapplication.ui.login.LoginAct;
+import com.example.myapplication.ui.userMainPage.userMainPageAct;
 import com.example.myapplication.ui.wenwuList.Wenwu;
 import com.example.myapplication.ui.wenwuList.WenwuAdapter;
 
@@ -32,13 +35,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeAct extends Activity {
+public class HomeAct extends Activity implements View.OnClickListener{
     private List<Wenwu> wenwuList=new ArrayList<>();
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private WenwuAdapter mWenwuAdapter;
     private Context con;
-    private Button searchButton;
     private EditText et;
     //private TextView tv;
     private String uid;
@@ -46,38 +48,60 @@ public class HomeAct extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        initButton();
         con=this;
         //tv=(TextView)findViewById(R.id.uid);
-        recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
-        layoutManager=new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        initWenWuList();
-        searchButton=(Button)findViewById(R.id.search_btn_back);
+        //initWenWuList();
+
         et=(EditText)findViewById(R.id.search_et_input);
         Intent intent=getIntent();
         uid=intent.getStringExtra("uid");
         //tv.setText(Global.getname());
-        searchButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(HomeAct.this, search.class);
-                intent.putExtra("word",et.getText().toString().trim());
-                intent.putExtra("uid",uid);
-                startActivity(intent);
-            }
-        });
+        initWenWuList();
+        //initFragment();
+    }
+    private void initButton(){
+        Button LogOutButton=(Button)findViewById(R.id.LogOut);
+        LogOutButton.setOnClickListener(this);
+        Button searchButton=(Button)findViewById(R.id.search_btn_back);
+        searchButton.setOnClickListener(this);
+        Button userHomeButton=(Button)findViewById(R.id.user_home);
+        userHomeButton.setOnClickListener(this);
+    }
+//    private daoHangFra mFragment;
+//    private void initFragment(){
+//        mFragment=new daoHangFra();
+//        getFragmentManager().beginTransaction().
+//                add(R.id.fl_container,mFragment).commitAllowingStateLoss();
+//    }
+    @Override
+    public void onClick(View view){
+        switch(view.getId()){
+            case R.id.LogOut:
+                Intent intentLogOut=new Intent(HomeAct.this, LoginAct.class);
+                startActivity(intentLogOut);
+                finish();
+                break;
+            case R.id.search_btn_back:
+                Intent intentSearch=new Intent(HomeAct.this, search.class);
+                intentSearch.putExtra("word",et.getText().toString().trim());
+                intentSearch.putExtra("uid",uid);
+                startActivity(intentSearch);
+                break;
+            case R.id.user_home:
+                Intent UserHomeIntent=new Intent(HomeAct.this, userMainPageAct.class);
+                startActivity(UserHomeIntent);
+                break;
+        }
     }
     public void initWenWuList(){
         new Thread(new Runnable(){
             @Override
             public void run(){
-                Global.wenWuInit=1;
                 wenwuList.clear();
                 try {
                     Connection conn = DBConnect.GetConnection();
-                    String sql = "select * from wenwu";
+                    String sql = "select * from wenwu order by visnum desc";
                     Statement st = (Statement) conn.createStatement();
                     ResultSet rs=st.executeQuery(sql);
                     while(rs.next()){
@@ -91,7 +115,6 @@ public class HomeAct extends Activity {
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
-                Global.wenWuInit=0;
             }
         }).start();
     };
@@ -107,16 +130,16 @@ public class HomeAct extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initWenWuList();
-    }
 
     private Handler myhandler = new Handler(){
         public void handleMessage(Message msg){
             switch(msg.what){
                 case 1:
+                    recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
+                    layoutManager=new LinearLayoutManager(con);
+                    layoutManager.setOrientation(RecyclerView.VERTICAL);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
                     mWenwuAdapter=new WenwuAdapter(con,wenwuList);
                     recyclerView.setAdapter(mWenwuAdapter);
                     break;
