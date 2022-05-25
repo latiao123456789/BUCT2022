@@ -31,6 +31,8 @@ import java.sql.Statement;
 
 public class userMainPageAct extends AppCompatActivity implements View.OnClickListener{
     private User user;
+    private Button ChangeIfoBtn;
+    private Button ChangepwdBtn;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -38,8 +40,10 @@ public class userMainPageAct extends AppCompatActivity implements View.OnClickLi
         initButton();
     }
     private void initButton(){
-        Button ChangeIfoBtn=(Button)findViewById(R.id.change_ifo);
+        ChangeIfoBtn=(Button)findViewById(R.id.change_ifo);
         ChangeIfoBtn.setOnClickListener(this);
+        ChangepwdBtn=(Button)findViewById(R.id.change_pwd);
+        ChangepwdBtn.setOnClickListener(this);
     }
     @Override
     public void onClick(View view){
@@ -47,6 +51,10 @@ public class userMainPageAct extends AppCompatActivity implements View.OnClickLi
             case R.id.change_ifo:
                 Intent ChangeIfoIntet=new Intent(userMainPageAct.this,changeInfoAct.class);
                 startActivity(ChangeIfoIntet);
+                break;
+            case R.id.change_pwd:
+                Intent ChangePwdIntent=new Intent(userMainPageAct.this,changePwdAct.class);
+                startActivity(ChangePwdIntent);
                 break;
         }
     }

@@ -42,9 +42,9 @@ public class LoginAct extends AppCompatActivity {
         setContentView(R.layout.login);
         Log.v("good","build");
         usernameEditText=(EditText)findViewById(R.id.logInUsername);
-        usernameEditText.setText("1");
+        //usernameEditText.setText("123456780");
         passwordEditText=(EditText)findViewById(R.id.logInPassword);
-        passwordEditText.setText("147258369");
+        //passwordEditText.setText("1234567801");
         myButtonsignup=(Button)findViewById(R.id.btn_2);
         iv=(ImageView)findViewById(R.id.iv_1);
         //Glide.with(this).load("https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png").into(iv);
@@ -59,21 +59,19 @@ public class LoginAct extends AppCompatActivity {
         myButtonlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
                 new Thread(new Runnable(){
                     @Override
                     public void run() {
                         try{
                             Connection cn= DBConnect.GetConnection();
-                            String sql="select * from users where username = '"+usernameEditText.getText().toString().trim()+"'";
+                            String sql="select * from users where username = '"+usernameEditText.getText().toString().trim()+"' and pwd=MD5('"+passwordEditText.getText().toString().trim()+"')";
                             Log.v("test",sql);
                             Statement stmt=cn.createStatement();
                             ResultSet rs=stmt.executeQuery(sql);
-                            rs.next();
-                            String name=rs.getString("pwd");
-                            names=rs.getString("username");
-                            Log.v("1aa",name);
-                            if(name.equals(passwordEditText.getText().toString().trim())) {
+                            if(rs.next()) {
+                                Global.sex=rs.getString("sex");
+                                Global.age=rs.getString("age");
                                 myhandler.sendEmptyMessage(1);
                             }
                             else{
@@ -96,7 +94,7 @@ public class LoginAct extends AppCompatActivity {
             switch(msg.what){
                 case 1:
                     Intent intent=new Intent(LoginAct.this,HomeAct.class);
-                    Global.name=names;
+                    Global.name=usernameEditText.getText().toString().trim();
                     startActivity(intent);
                     finish();
                     break;

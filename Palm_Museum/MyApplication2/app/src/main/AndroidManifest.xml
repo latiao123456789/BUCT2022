@@ -15,7 +15,9 @@
         <activity android:name=".ui.wenwuMainPage.comment.commentMainPage" />
         <activity android:name=".ui.wenwuMainPage.wenwuMainPage" />
         <activity android:name=".ui.userMainPage.userMainPageAct" />
+        <activity android:name=".ui.userMainPage.changePwdAct" />
         <activity android:name=".ui.userMainPage.changeInfoAct" />
+        <activity android:name=".ui.userMainPage.UserLikes" />
         <activity android:name=".ui.login.LoginAct" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

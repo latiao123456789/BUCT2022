@@ -8,6 +8,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.DB.DBConnect;
+import com.example.myapplication.Global;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.wenwuList.Wenwu;
 import com.example.myapplication.ui.wenwuList.WenwuAdapter;
@@ -34,7 +37,7 @@ public class search extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private WenwuAdapter mWenwuAdapter;
-    private EditText et;
+    private AutoCompleteTextView et;
     private Context con;
     private String word=new String("");
     private Button btn;
@@ -59,7 +62,9 @@ public class search extends AppCompatActivity {
         });
     }
     private void init(){
-        et=(EditText)findViewById(R.id.search_input);
+        et=(AutoCompleteTextView) findViewById(R.id.search_input);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(search.this,android.R.layout.simple_dropdown_item_1line, Global.getWenWuNames());
+        et.setAdapter(adapter);
         con=this;
         recyclerView=(RecyclerView)findViewById(R.id.search_recycle);
         btn=(Button)findViewById(R.id.search_btn_search_page);

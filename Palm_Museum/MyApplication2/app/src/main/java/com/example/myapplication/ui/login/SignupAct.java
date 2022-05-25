@@ -114,7 +114,7 @@ public class SignupAct extends AppCompatActivity {
                         int u=0;
                         try{
                             Connection cn=DBConnect.GetConnection();
-                            String sql="insert into users(username,pwd) values('"+userNameString+"','"+passwordString+"')";
+                            String sql="insert into users(username,pwd) values('"+userNameString+"',MD5('"+passwordString+"'))";
                             Log.v("test",sql);
                             PreparedStatement pst;
                             pst=(PreparedStatement)cn.prepareStatement(sql);

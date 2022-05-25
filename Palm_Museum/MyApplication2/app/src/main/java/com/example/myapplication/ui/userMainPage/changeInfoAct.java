@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.DB.DBConnect;
 import com.example.myapplication.Global;
@@ -16,33 +18,33 @@ import com.example.myapplication.R;
 import com.example.myapplication.User;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class changeInfoAct extends Activity implements View.OnClickListener{
-    private String[] sexArry = {"男","待选","女"};
-    private EditText changeUserName;
-    private EditText changeUserPwd;
-    private EditText changeUserRepwd;
+import static java.lang.Thread.sleep;
+
+public class changeInfoAct extends Activity implements View.OnClickListener {
+    private String[] sexArry = {"男", "待选", "女"};
     private TextView changeSex;
     private EditText age;
+    private Button baoCunButton;
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_ifo);
         initButton();
         initEditText();
         initTextView();
     }
-    private void initEditText(){
-        changeUserName=(EditText)findViewById(R.id.change_username);
-        changeUserPwd=(EditText)findViewById(R.id.change_pwd);
-        changeUserRepwd=(EditText)findViewById(R.id.change_newpwd);
-        age=(EditText)findViewById(R.id.change_age);
+
+    private void initEditText() {
+        age = (EditText) findViewById(R.id.change_age);
     }
-    private void initTextView(){
-        changeSex=(TextView) findViewById(R.id.change_sex);
+
+    private void initTextView() {
+        changeSex = (TextView) findViewById(R.id.change_sex);
         changeSex.setOnClickListener(v -> {//性别点击后弹出性别选择框
             AlertDialog.Builder builder3 = new AlertDialog.Builder(this);// 自定义对话框
             // checkedItem默认的选中 setSingleChoiceItems设置单选按钮组
@@ -54,25 +56,34 @@ public class changeInfoAct extends Activity implements View.OnClickListener{
             builder3.show();// 让弹出框显示
         });
     }
-    private void initButton(){
-        Button baoCunButton=(Button)findViewById(R.id.change_baocun);
+
+    private void initButton() {
+        baoCunButton = (Button) findViewById(R.id.change_baocun);
         baoCunButton.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.change_baocun:
                 new Thread(new Runnable(){
                     @Override
-                    public void run() {
-                        try {
-                            Connection cn = DBConnect.GetConnection();
-                            String sql = "select * from users where username='"+ Global.getName()+"'";
-                            Statement st = (Statement)cn.createStatement();
-                            ResultSet rs=st.executeQuery(sql);
-                            st.close();
-                            cn.close();
+                    public void run(){
+                        String Sex=changeSex.getText().toString().trim();
+                        String Age=age.getText().toString().trim();
+                        if(Sex.equals(""))Sex=Global.getSex();
+                        if(Age.equals(""))Age=Global.getAge();
+                        try{
+                            Connection cn= DBConnect.GetConnection();
+                            String sql="update users set age='"+Age+"',sex='"+Sex+"' where username='"+Global.getName()+"'";
+                            Log.v("test",sql);
+                            PreparedStatement pst=(PreparedStatement)cn.prepareStatement(sql);
+                            pst.executeUpdate();
+                            pst.close();
                             myhandler.sendEmptyMessage(1);
+                            Global.sex=Sex;
+                            Global.age=Age;
+                            cn.close();
                         }catch (SQLException e){
                             e.printStackTrace();
                         }
@@ -81,10 +92,11 @@ public class changeInfoAct extends Activity implements View.OnClickListener{
                 break;
         }
     }
-    private Handler myhandler = new Handler(){
-        public void handleMessage(Message msg){
-            switch(msg.what){
+    private Handler myhandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case 1:
+                    Toast.makeText(getApplicationContext(),"修改成功!",Toast.LENGTH_SHORT).show();
                     break;
             }
         }
